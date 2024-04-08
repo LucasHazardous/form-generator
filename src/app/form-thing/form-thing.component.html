@@ -1,1 +1,14 @@
-<p>form-thing works!</p>
+<form [formGroup]="form">
+  <div *ngFor="let key of Object.keys(data)">
+    <label>{{key}}</label>
+    <div *ngIf="data[key].type === 'text' || data[key].type === 'number'">
+      <input [type]="form.value[key].type" [formControlName]="key">
+    </div>
+    <div *ngIf="data[key].type === 'select'">
+      <select [formControlName]="key">
+        <option *ngFor="let param of data[key].params">{{param}}</option>
+      </select>
+    </div>
+  </div>
+  <input type="submit" (click)="onSubmit()">
+</form>
