@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormThingService } from '../form-thing.service';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DynamicForm } from '../../model/form';
 
 @Component({
@@ -21,7 +21,7 @@ export class FormThingComponent implements OnInit {
 
       this.form = this.fb.group(
         Object.keys(this.data).reduce((obj: any, item: string) => {
-          obj[item] = new FormControl('');
+          obj[item] = new FormControl('', [Validators.required]);
           return obj;
         }, {})
       );
@@ -29,11 +29,15 @@ export class FormThingComponent implements OnInit {
   }
 
   onSubmit() {
-    this.formThingService.sendForm(
-      Object.keys(this.data).reduce((obj: any, item: string) => {
-        obj[item] = this.form.get(item)!.value;
-        return obj;
-      }, {})
-    );
+    if(this.form.valid) {
+      this.formThingService.sendForm(
+        Object.keys(this.data).reduce((obj: any, item: string) => {
+          obj[item] = this.form.get(item)!.value;
+          return obj;
+        }, {})
+      );
+    } else {
+      console.log("Invalid");
+    }
   }
 }

@@ -15,7 +15,7 @@ export class FormThingService {
   }
 
   sendForm(body: any) {
-    console.log(body)
+    console.log(body);
     this.http.post(this.api, body).subscribe();
   }
 }

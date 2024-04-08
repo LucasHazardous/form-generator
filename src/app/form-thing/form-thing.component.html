@@ -6,6 +6,7 @@
     </div>
     <div *ngIf="data[key].type === 'select'">
       <select [formControlName]="key">
+        <option disabled selected value></option>
         <option *ngFor="let param of data[key].params">{{param}}</option>
       </select>
     </div>
